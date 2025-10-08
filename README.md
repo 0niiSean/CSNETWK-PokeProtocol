@@ -19,7 +19,7 @@ You will need to open **two separate terminals** (or command prompts) inside thi
     Host is listening on channel 4000. Waiting for a friend...
     ```
 
-2.  **In your SECOND terminal, run the joiner:**
+**2.  In your SECOND terminal, run the joiner:**
     The Joiner will send a message to the Host and wait for a reply.
 
     ```bash
