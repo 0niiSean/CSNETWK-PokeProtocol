@@ -1,0 +1,28 @@
+{
+  "name": "csnetwk-pokeprotocol",
+  "version": "1.0.0",
+  "description": "An implementation of the P2P Pokémon Battle Protocol (PokeProtocol) over UDP for the CSNETWK Machine Problem",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0niiSean/CSNETWK-PokeProtocol.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0niiSean/CSNETWK-PokeProtocol/issues"
+  },
+  "homepage": "https://github.com/0niiSean/CSNETWK-PokeProtocol#readme",
+  "dependencies": {
+    "csv-parser": "^3.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.37.0",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2"
+  }
+}
