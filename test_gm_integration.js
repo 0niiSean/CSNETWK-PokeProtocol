@@ -17,8 +17,8 @@ initSocket(hostPort);
 initSocket(joinerPort, '127.0.0.1'); // Bind Joiner explicitly if running both locally
 
 // --- STEP 3: Game State Setup ---
-const hostTeam = ['Bulbasaur', 'Venusaur', 'Charizard']; // We know these are present
-const joinerTeam = ['Pikachu', 'Gengar', 'Snorlax'];     // We know these are present
+const hostTeam = ['Bulbasaur', 'Venusaur', 'Charizard']; 
+const joinerTeam = ['Pikachu', 'Gengar', 'Snorlax'];    
 const SEED = 42;
 
 const initialState = initializeState(
