@@ -96,6 +96,9 @@ function handleUserInput(input) {
                 
                 // 1. Get sequence number (THIS LINE IS NOW RESOLVED)
                 const seqNum = Reliability.getNextSequenceNumber(); 
+
+                // 1.5.Store the move context for later use when receiving DEFENSE_ANNOUNCE
+                TurnResolver.setActiveTurn(moveName); 
                 
                 // 2. Create Attack Announce message
                 const attackMessage = {

@@ -129,3 +129,15 @@ export function getBattleState() {
 export function advanceTurn() {
     battleState.turn += 1;
 }
+
+/**
+ * Updates the remote peer's connection information.
+ * Should be called when receiving messages with remoteIP/remotePort.
+ */
+export function setRemoteConnection(remoteIP, remotePort) {
+    if (remoteIP && remotePort) {
+        battleState.remoteIP = remoteIP;
+        battleState.remotePort = remotePort;
+        Logger.log('BattleState', `Remote connection updated: ${remoteIP}:${remotePort}`);
+    }
+}

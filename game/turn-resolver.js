@@ -49,6 +49,24 @@ export function setActiveTurn(moveName) {
 }
 
 /**
+ * Handles the calculation sequence when DEFENSE_ANNOUNCE is received (Attacking Peer).
+ * Mirrors routeAttack() for consistency.
+ */
+export function routeDefense() {
+    const state = GameState.getBattleState();
+    
+    // Attacker must calculate damage when they receive DEFENSE_ANNOUNCE
+    const localResult = performLocalCalculation(state.local.pokemonName, activeTurnContext.moveName);
+    activeTurnContext.localResult = localResult;
+    
+    // Send our CALCULATION_REPORT
+    sendCalculationReport(localResult, activeTurnContext.remoteIP, activeTurnContext.remotePort);
+    
+    // This will print a log confirming the attacker has calculated and sent their report.
+    Logger.log('Resolver', `Defense received. Sent CALCULATION_REPORT. Waiting for opponent's report.`);
+}
+
+/**
  * Executes the defense/calculation sequence when ATTACK_ANNOUNCE is received (Defending Peer).
  * @param {Object} attackMessage - The decoded ATTACK_ANNOUNCE message.
  */

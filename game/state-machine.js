@@ -80,6 +80,7 @@ export function handleHandshakeResponse(message) {
 export function handleBattleSetup(message) {
     // 1. Update GameState with opponent's chosen Pokemon and stat_boosts.
     GameState.setOpponentSetup(message);
+    GameState.setRemoteConnection(message.remoteIP, message.remotePort);
 
     const remoteIP = message.remoteIP;
     const remotePort = message.remotePort;
@@ -149,7 +150,7 @@ export function handleDefenseAnnounce(message) {
     }
     
     // CRITICAL: The Attacker now runs its calculation immediately after receiving DEFENSE_ANNOUNCE.
-    // TurnResolver.calculateAndReportAttacker(); // Placeholder to show Attacker calculation here.
+    TurnResolver.routeDefense(); // Placeholder to show Attacker calculation here.
     
     // This will print a log confirming the defense announcement was received and calculation/reporting is beginning.
     Logger.log('SM', 'Received DEFENSE_ANNOUNCE. Proceeding to calculation (Sending CALCULATION_REPORT)...');
