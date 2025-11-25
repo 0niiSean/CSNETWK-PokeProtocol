@@ -1,7 +1,6 @@
 /**
  * File: game/game-tests.js
  * Purpose: Test suite for verifying the core game logic modules (BattleState, DamageCalculator, TurnResolver).
- * FIX: Resolved ReferenceError by ensuring mock objects (NetworkClient) are accessible within simulated module scopes.
  */
 
 // ====================================================================
@@ -23,7 +22,6 @@ const RNG = { generateRandomModifier: () => 1.0, initializeRNG: () => {} };
 const mockNetworkSent = [];
 const NetworkClient = {
     sendGameCommand: (message) => { mockNetworkSent.push(message); },
-    // Mock the reliability functions used by the State Machine initialization placeholder
     sendBattleSetup: () => {}, 
 };
 
@@ -145,6 +143,7 @@ const TurnResolver = (() => {
 // ====================================================================
 
 function runGameTests() {
+    // This will print the test suite's starting header.
     console.log('--- RUNNING GAME LOGIC TESTS (Deterministic Mode) ---');
 
     // 1. SETUP: Initialize battle state (Pikachu vs. Bulbasaur)
@@ -157,28 +156,34 @@ function runGameTests() {
     
     
     // --- TEST 0 & 1: Data Check and Damage Calculation ---
+    // This will print the section header for the initial data and damage calculation tests.
     console.log('\n0. & 1. Data Integrity and Damage Calculation');
     const expectedRawDamage = 34.61538;
     const expectedFinalDamage = 34; 
 
     // Initial check (re-run the check logic)
     if (attacker.baseStats.hp === 35 && defender.baseStats.sp_defense === 65) {
-        console.log(`  ✅ 0. Base Stats loaded correctly.`);
+        // This will print a success message if the base stats were loaded correctly.
+        console.log(`  ✅ 0. Base Stats loaded correctly.`);
     } else {
-        console.error(`  ❌ 0. Base Stats mismatch.`);
+        // This will print an error message if the base stats are incorrect.
+        console.error(`  ❌ 0. Base Stats mismatch.`);
     }
 
     const calculatedDamage = DamageCalculator.calculateDamage(attacker, defender, TurnResolver.MOCK_MOVESET.Thunderbolt);
     const finalCalculatedDamage = Math.floor(calculatedDamage);
 
     if (finalCalculatedDamage === expectedFinalDamage) {
-        console.log(`  ✅ 1. Final Damage: ${finalCalculatedDamage} is correct.`);
+        // This will print a success message showing the calculated damage.
+        console.log(`  ✅ 1. Final Damage: ${finalCalculatedDamage} is correct.`);
     } else {
-        console.error(`  ❌ 1. Final Damage Mismatch. Expected: ${expectedFinalDamage}, Got: ${finalCalculatedDamage}`);
+        // This will print an error message showing the expected vs. actual damage.
+        console.error(`  ❌ 1. Final Damage Mismatch. Expected: ${expectedFinalDamage}, Got: ${finalCalculatedDamage}`);
     }
 
 
     // --- TEST 2: Turn Resolver Synchronization Check (The section that failed) ---
+    // This will print the section header for the synchronization check tests.
     console.log('\n2. Turn Resolver Synchronization Check');
 
     const localCalcResult = TurnResolver.performLocalCalculation('local', 'Thunderbolt');
@@ -193,9 +198,11 @@ function runGameTests() {
     const resolutionStatus = TurnResolver.processCalculationReport(matchingReport, localCalcResult);
 
     if (resolutionStatus === 'CONFIRMED' && defender.currentHP === 11 && mockNetworkSent.length === 1 && mockNetworkSent[0].message_type === 'CALCULATION_CONFIRM') {
-        console.log('  ✅ 2a. Sync Success: Sent CALCULATION_CONFIRM and HP updated.');
+        // This will print a success message if the local calculation matched the remote report, HP was updated, and a confirmation message was sent.
+        console.log('  ✅ 2a. Sync Success: Sent CALCULATION_CONFIRM and HP updated.');
     } else {
-        console.error(`  ❌ 2a. Sync Failure. Status: ${resolutionStatus}. Current HP: ${defender.currentHP}`);
+        // This will print an error message with debug info if synchronization failed.
+        console.error(`  ❌ 2a. Sync Failure. Status: ${resolutionStatus}. Current HP: ${defender.currentHP}`);
         console.log(`Debug: Network messages sent: ${mockNetworkSent.length}`);
     }
 
@@ -210,9 +217,11 @@ function runGameTests() {
     const discrepancyStatus = TurnResolver.processCalculationReport(discrepancyReport, localCalcResult);
     
     if (discrepancyStatus === 'DISCREPANCY') {
-        console.log('  ✅ 2b. Discrepancy detected and correctly triggered error handling.');
+        // This will print a success message if the logic correctly identified a mismatch between local and remote calculations.
+        console.log('  ✅ 2b. Discrepancy detected and correctly triggered error handling.');
     } else {
-        console.error('  ❌ 2b. Failed to detect calculation discrepancy.');
+        // This will print an error message if the discrepancy check failed.
+        console.error('  ❌ 2b. Failed to detect calculation discrepancy.');
     }
 }
 

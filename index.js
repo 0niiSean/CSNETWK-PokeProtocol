@@ -4,23 +4,23 @@
  * and links the Network Layer (UDP Socket) to the Application Router (Game State Machine).
  */
 
-// --- UTILITIES & CONSTANTS (Must use explicit .js extension for ES Module Resolution) ---
-import * as Logger from './lib/utils/logger.js';
-import * as RNG from './lib/utils/rng.js';
-import * as GameState from './lib/game/battle-state.js';
-import { MESSAGE_TYPES, BATTLE_FIELDS, RELIABILITY_FIELDS } from './lib/protocol/constants.js';
+// --- UTILITIES & CONSTANTS ---
+import * as Logger from './utils/logger.js';
+import * as RNG from './utils/rng.js';
+import * as GameState from './game/battle-state.js';
+import { MESSAGE_TYPES, BATTLE_FIELDS, RELIABILITY_FIELDS } from './protocol/constants.js'; 
 
 // --- NETWORK LAYER ---
-import * as UDPSocket from './lib/network/udp-socket.js';
-import * as P2PClient from './lib/network/p2p-client.js';
-import * as P2PServer from './lib/network/p2p-server.js';
-import * as Reliability from './lib/network/reliability.js';
-
+import * as UDPSocket from './network/udp-socket.js';
+import * as P2PClient from './network/p2p-client.js';
+import * as P2PServer from './network/p2p-server.js';
+import * as Reliability from './network/reliability.js';
 
 // --- GAME LOGIC LAYER ---
-import * as StateMachine from './lib/game/state-machine.js';
-import * as TurnResolver from './lib/game/turn-resolver.js';
-import { sendChat } from './lib/game/chat-overlay.js';
+import * as StateMachine from './game/state-machine.js';
+import { CONNECTION_STATES } from './game/state-machine.js'; // <-- CRITICAL FIX: Importing the state object
+import * as TurnResolver from './game/turn-resolver.js';
+import { sendChat } from './game/chat-overlay.js';
 
 // Node.js standard libraries for command-line input
 import * as readline from 'readline';
@@ -37,11 +37,6 @@ const DEFAULT_PORT = 8000;
 // SECTION 1: APPLICATION ROUTER (Links Network to Game State)
 // ====================================================================
 
-/**
- * The high-level application router called by the UDP Socket upon receiving a reliable message.
- * This function routes messages to the P2PServer, P2PClient, or the Game State Machine.
- * @param {Object} message - The decoded message object (includes remoteIP/remotePort).
- */
 function applicationRouter(message) {
     const role = StateMachine.getPeerRole();
     const state = GameState.getBattleState();
@@ -62,7 +57,7 @@ function applicationRouter(message) {
     StateMachine.routeApplicationPacket(message);
     
     // After any application packet, check if the Host should now proceed with the turn.
-    if (StateMachine.getConnectionState() === StateMachine.CONNECTION_STATES.WAITING_FOR_MOVE) {
+    if (StateMachine.getConnectionState() === CONNECTION_STATES.WAITING_FOR_MOVE) {
         // If it's my turn (Host always starts, then turns alternate)
         if (role === (state.turn % 2 === 1 ? 'HOST' : 'JOINER')) {
             // Re-prompt the user if they were waiting for the state machine to return.
@@ -90,7 +85,7 @@ function handleUserInput(input) {
         return;
     }
 
-    if (currentState === StateMachine.CONNECTION_STATES.WAITING_FOR_MOVE) {
+    if (currentState === CONNECTION_STATES.WAITING_FOR_MOVE) {
         const moveName = input.trim();
         
         // --- Input Validation and Execution ---
@@ -113,19 +108,19 @@ function handleUserInput(input) {
                 P2PClient.sendGameCommand(attackMessage, state.remoteIP, state.remotePort);
                 
                 // 4. Transition locally to processing state while waiting for DEFENSE_ANNOUNCE
-                StateMachine.transitionState(StateMachine.CONNECTION_STATES.PROCESSING_TURN);
+                StateMachine.transitionState(CONNECTION_STATES.PROCESSING_TURN);
                 console.log(`[Input] Executed move: ${moveName}. Waiting for opponent response...`);
 
             } else {
                 console.log(`[Error] Invalid move: ${moveName}. Available: Thunderbolt, Tackle.`);
             }
         }
-    } else if (currentState !== StateMachine.CONNECTION_STATES.GAME_OVER) {
+    } else if (currentState !== CONNECTION_STATES.GAME_OVER) {
         console.log(`[Status] Please wait, currently in ${currentState}.`);
     }
     
     // Resume prompt if still in waiting state
-    if (StateMachine.getConnectionState() === StateMachine.CONNECTION_STATES.WAITING_FOR_MOVE) {
+    if (StateMachine.getConnectionState() === CONNECTION_STATES.WAITING_FOR_MOVE) {
         process.stdout.write('> ');
     }
 }
@@ -188,7 +183,7 @@ function handleJoinerStartup() {
             P2PClient.initiateJoinerHandshake(hostIP, hostPort);
             
             // Update state machine to expect response
-            StateMachine.transitionState(StateMachine.CONNECTION_STATES.INIT_SENT);
+            StateMachine.transitionState(CONNECTION_STATES.INIT_SENT);
         });
     });
 }

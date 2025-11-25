@@ -7,13 +7,10 @@
 // Placeholder for random number generation logic (from utils/rng.js)
 // import { generateRandomModifier } from '../utils/rng.js'; 
 
-// NOTE: We assume a simplified move pool for this core calculator.
-// Move data structure should look like: { name: 'Thunderbolt', type: 'electric', category: 'special', base_power: 90 }
-
 /**
  * Calculates the damage inflicted by an attack based on the RFC formula.
  * The result is a floating-point number, which should be rounded by the caller (Turn Resolver).
- * * Damage = (Base Power * Attacker Stat / Defender Stat) * Type1Effectiveness * Type2Effectiveness
+ * Damage = (Base Power * Attacker Stat / Defender Stat) * Type1Effectiveness * Type2Effectiveness
  * * @param {Object} attackerMon - The attacking Pokémon's stats object (from BattleState).
  * @param {Object} defenderMon - The defending Pokémon's stats object (from BattleState).
  * @param {Object} move - The attacking move's details (must contain type, category, base_power).
@@ -58,10 +55,9 @@ export function calculateDamage(attackerMon, defenderMon, move, isBoosted = fals
     const totalTypeEffectiveness = type1Effectiveness * type2Effectiveness;
 
     // 3. Apply Damage Formula (RFC 6)
-    // Note: The formula lacks a Level constant or general base constant, so we use the strict RFC formula.
 
     if (defenderStat === 0) {
-        // Avoid division by zero
+        // This returns an arbitrarily high number to represent a critical failure in defense (division by zero).
         return 9999; 
     }
 
@@ -69,6 +65,7 @@ export function calculateDamage(attackerMon, defenderMon, move, isBoosted = fals
     
     let finalDamage = baseDamage * totalTypeEffectiveness;
     
+    // NOTE: This section is commented out because the RFC requires a deterministic (non-random) calculation for synchronization.
     // Placeholder for Random Modifier (85% to 100% is typical, using 1.0 for strict RFC adherence in a deterministic system)
     // const randomModifier = generateRandomModifier(); 
     // finalDamage *= randomModifier; 

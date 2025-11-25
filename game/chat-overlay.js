@@ -1,7 +1,6 @@
 /**
  * File: game/chat-overlay.js
  * Purpose: Manages the sending and display of asynchronous chat messages and stickers.
- * * Complies with RFC 5.2, Step 4: Chat messages are independent of the turn-based logic.
  */
 
 import * as NetworkClient from '../network/p2p-client.js';
@@ -19,13 +18,13 @@ const CONTENT_TYPE_STICKER = 'STICKER';
  * Sends a chat message or sticker packet reliably over the network.
  * @param {string} content - The message text or Base64 sticker data.
  * @param {string} contentType - 'TEXT' or 'STICKER'.
- * @returns {void}
  */
 export function sendChat(content, contentType = CONTENT_TYPE_TEXT) {
     const state = GameState.getBattleState();
     
     // Ensure we have connectivity details
     if (!state.remoteIP || !state.remotePort) {
+        // This will print an error if the opponent's network details are missing.
         Logger.error('Chat', 'Cannot send chat: Opponent IP/Port not set.');
         return;
     }
@@ -46,15 +45,12 @@ export function sendChat(content, contentType = CONTENT_TYPE_TEXT) {
     // 2. Send reliably
     NetworkClient.sendGameCommand(message, state.remoteIP, state.remotePort);
     
-    // 3. Display message locally immediately (no need to wait for echo)
+    // 3. Display message locally immediately
     displayMessage(message, true);
 }
 
 /**
  * Displays an incoming or outgoing chat message/sticker on the console/UI.
- * * This function is typically called by the main Game State Router.
- * @param {Object} message - The decoded CHAT_MESSAGE object.
- * @param {boolean} [isLocal=false] - Whether the message originated locally.
  */
 export function handleIncomingChat(message) {
     displayMessage(message);
@@ -68,12 +64,15 @@ function displayMessage(message, isLocal = false) {
 
     if (message[BATTLE_FIELDS.CONTENT_TYPE] === CONTENT_TYPE_TEXT) {
         const text = message['message_text'];
+        // This will print the sender and the text message to the console.
         console.log(`\n[CHAT: ${sender}]: ${text}`);
     } else if (message[BATTLE_FIELDS.CONTENT_TYPE] === CONTENT_TYPE_STICKER) {
         // RFC 4.11 notes sticker_data is Base64 (abbreviated here)
         const data = message['sticker_data'].substring(0, 30) + '...'; 
+        // This will print the sender and a truncated description of the sticker data to the console.
         console.log(`\n[CHAT: ${sender}]: -- SENT STICKER -- (Data: ${data})`);
     } else {
+        // This will print a warning if a received chat message has an unrecognized content type.
         Logger.warn('Chat', `Received unsupported content type: ${message[BATTLE_FIELDS.CONTENT_TYPE]}`);
     }
 }

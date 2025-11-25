@@ -1,12 +1,11 @@
 /**
  * File: game/battle-state.js
  * Purpose: Manages the centralized, synchronized state of the battle (The source of truth).
- * This includes HP, active Pokémon stats, opponent information, and the battle seed.
  */
 
 import { loadPokemonData } from '../utils/csv-data-loader.js';
 import * as Logger from '../utils/logger.js';
-import * as RNG from '../utils/rng.js'; // Needed if we were calculating damage variance
+import * as RNG from '../utils/rng.js';
 
 // --- BATTLE STATE STRUCTURE ---
 const battleState = {
@@ -44,14 +43,13 @@ let pokemonData = null; // Cache for CSV loaded data
 
 /**
  * Initializes the Battle State, loading data and setting synchronized values.
- * This is called once by the Host (with seed=0) and once by the Joiner (with the Host's seed).
  */
 export function initializeState(localPokemonName, localAttackBoosts, localDefenseBoosts, seed, remoteIP, remotePort) {
     if (!pokemonData) {
         // Load data on first call
         pokemonData = loadPokemonData('./pokemon (1).csv'); 
         if (pokemonData.size === 0) {
-             throw new Error("Critical Error: Pokémon CSV data failed to load or is empty.");
+              throw new Error("Critical Error: Pokémon CSV data failed to load or is empty.");
         }
     }
 
@@ -65,7 +63,6 @@ export function initializeState(localPokemonName, localAttackBoosts, localDefens
     battleState.remoteIP = remoteIP;
     battleState.remotePort = remotePort;
     
-    // NOTE: We only update local data on subsequent calls (like when the Joiner gets the seed)
     if (battleState.local.pokemonName !== localPokemonName) {
         battleState.local.pokemonName = localPokemonName;
         battleState.local.baseStats = localMonStats;
@@ -74,17 +71,19 @@ export function initializeState(localPokemonName, localAttackBoosts, localDefens
         battleState.local.stat_boosts.special_defense_uses = localDefenseBoosts;
     }
     
+    // This will print the initialization status, showing local Pokémon's starting HP and the battle seed.
     Logger.log('BattleState', `Initialized. Local HP: ${battleState.local.currentHP}, Seed: ${seed}`);
 }
 
 /**
- * Sets the opponent's initial setup data received via the BATTLE_SETUP message (RFC 4.4).
+ * Sets the opponent's initial setup data received via the BATTLE_SETUP message.
  */
 export function setOpponentSetup(setupMessage) {
     const { pokemon_name, stat_boosts, communication_mode } = setupMessage;
 
     const opponentMonStats = pokemonData.get(pokemon_name);
     if (!opponentMonStats) {
+        // This will print an error if the opponent's Pokémon name is not found in the loaded CSV data.
         Logger.error('BattleState', `Opponent Pokémon '${pokemon_name}' not found in CSV.`);
         return; 
     }
@@ -95,11 +94,12 @@ export function setOpponentSetup(setupMessage) {
     battleState.opponent.currentHP = opponentMonStats.hp; 
     battleState.opponent.stat_boosts = stat_boosts;
     
+    // This will print confirmation that the opponent's setup is complete, showing their starting HP.
     Logger.log('BattleState', `Opponent setup complete. HP: ${battleState.opponent.currentHP}`);
 }
 
 /**
- * **CRITICAL EXPORT:** Returns the data needed to send a BATTLE_SETUP packet.
+ * Returns the data needed to send a BATTLE_SETUP packet.
  */
 export function getLocalSetupData() {
     return {
