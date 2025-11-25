@@ -25,6 +25,21 @@ let routerCallback = null;
 // ====================================================================
 
 /**
+ * Logs the full, raw RFC-compliant message payload to the console.
+ */
+function logPayload(message, encodedData) {
+    if (message.message_type === MESSAGE_TYPES.HANDSHAKE_REQUEST) {
+        Logger.log('Client', `--- SENT MESSAGE (RFC 4.1) ---`);
+        console.log(`message_type: ${message.message_type}\n`);
+    } else {
+        // Fallback for logging other simple messages
+        Logger.log('Client', `--- SENT MESSAGE PAYLOAD ---`);
+        console.log(encodedData);
+    }
+}
+
+
+/**
  * Sends a raw packet (encoded string) over the UDP socket.
  * * CRITICAL: This function is the direct interface to the network hardware and is linked 
  * to the Reliability layer via initializeSender().
@@ -42,6 +57,9 @@ function sendRawPacket(message, ip, port) {
         // FIX: Ensure Serializer is called correctly.
         const encodedData = Serializer.encode(message); 
         const buffer = Buffer.from(encodedData, 'utf8');
+
+        // Log the payload content only once, before transmission
+        logPayload(message, encodedData); 
         
         const logId = message[RELIABILITY_FIELDS.SEQUENCE_NUMBER] || message[RELIABILITY_FIELDS.ACK_NUMBER] || 'N/A';
         const logType = (message.message_type === MESSAGE_TYPES.ACK) ? 'ACK' : 'Data';

@@ -37,17 +37,21 @@ function handleHandshakeRequest(message) {
     // 2. Acknowledge the request and construct the response
     const receivedSeqNum = message[RELIABILITY_FIELDS.SEQUENCE_NUMBER];
     const responseSeqNum = Reliability.getNextSequenceNumber();
+    
+    // CRITICAL CHANGE: Create the message object fully here
     const responseMessage = createHandshakeResponse(responseSeqNum, seed, receivedSeqNum);
 
     // 3. Send the response reliably
     Reliability.sendReliable(responseMessage, remoteIP, remotePort);
     Logger.log('Server', `Sent HANDSHAKE_RESPONSE (Seq: ${responseSeqNum}, Seed: ${seed}).`);
+    
+    // 4. LOG THE RFC 4.2 PAYLOAD FORMAT
+    logHandshakeResponsePayload(responseMessage); // <-- NEW LOGGING CALL
 
-    // 4. Update Host GameState with the remote connection details and seed
-    // NOTE: This updates the seed on the Host's side as well, synchronizing the RNG seed (RFC 5.2).
+    // 5. Update Host GameState (remains the same)
     const localMonName = GameState.getBattleState().local.pokemonName;
     GameState.initializeState(localMonName, 5, 5, seed, remoteIP, remotePort); 
-    RNG.initializeRNG(seed); // Initialize RNG for the Host Peer
+    RNG.initializeRNG(seed);
 }
 
 /**
@@ -62,6 +66,18 @@ function handleSpectatorRequest(message) {
     // CRITICAL: Acknowledge the request (Spectators are fire-and-forget control packets)
     Reliability.sendAck(receivedSeqNum, remoteIP, remotePort);
     Logger.log('Server', 'Spectator acknowledged. Connection pending application routing.');
+}
+
+/**
+ * Logs the HANDSHAKE_RESPONSE payload in the exact RFC 4.2 format.
+ */
+function logHandshakeResponsePayload(message) {
+    const seed = message[BATTLE_FIELDS.SEED];
+    
+    console.log(`\n--- SENT MESSAGE (RFC 4.2) ---`);
+    console.log(`message_type: ${MESSAGE_TYPES.HANDSHAKE_RESPONSE}`);
+    console.log(`seed: ${seed}`);
+    // Only logging required fields, sequence/ack are handled by Logger/UDP log
 }
 
 
