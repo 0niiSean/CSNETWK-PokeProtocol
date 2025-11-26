@@ -34,6 +34,12 @@ export function initializeRNG(newSeed) {
     }
     seed = newSeed;
     randomGenerator = mulberry32(seed);
+
+    /* DEBUG
+    const testValue = randomGenerator();
+    console.log(`[RNG INIT] Seed: ${newSeed}, First test value: ${testValue.toFixed(10)}`);
+    */
+    randomGenerator = mulberry32(seed);
 }
 
 /**
@@ -53,6 +59,13 @@ export function generateRandomModifier() {
     const min = 0.85;
     const max = 1.00;
     // (max - min) * random() + min
+
+    /* DEBUG
+    const randomValue = nextRandom();
+    const modifier = (max - min) * randomValue + min;
+    console.log(`[RNG CALL] nextRandom: ${randomValue.toFixed(10)}, modifier: ${modifier.toFixed(10)}`);
+    */
+
     return (max - min) * nextRandom() + min;
 }
 

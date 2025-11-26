@@ -5,7 +5,7 @@
  * * This module routes incoming messages from the UDP socket's application router (routerCallback).
  */
 
-import { MESSAGE_TYPES, RELIABILITY_FIELDS } from '../protocol/constants.js';
+import { MESSAGE_TYPES, RELIABILITY_FIELDS, BATTLE_FIELDS    } from '../protocol/constants.js';
 import { createHandshakeResponse } from '../protocol/message-creators.js';
 import * as Reliability from './reliability.js';
 import * as Logger from '../utils/logger.js'; 
