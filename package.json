@@ -1,28 +1,33 @@
 {
   "name": "csnetwk-pokeprotocol",
   "version": "1.0.0",
-  "description": "**v0.1.0 - Initial Draft**",
-  "main": "index.js",
-  "type": "module",
-  "directories": {
-    "doc": "docs",
-    "lib": "lib"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "P2P Pokémon Battle Protocol over UDP with Electron GUI",
+  "keywords": ["pokemon", "udp", "p2p", "electron", "battle"],
+  "homepage": "https://github.com/0niiSean/CSNETWK-PokeProtocol#readme",
+  "bugs": {
+    "url": "https://github.com/0niiSean/CSNETWK-PokeProtocol/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/0niiSean/CSNETWK-PokeProtocol.git"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/0niiSean/CSNETWK-PokeProtocol/issues"
+  "author": "",
+  "type": "module",
+  "main": "electron-main.js",
+  "directories": {
+    "doc": "docs"
   },
-  "homepage": "https://github.com/0niiSean/CSNETWK-PokeProtocol#readme",
+  "scripts": {
+    "start": "node index.js",
+    "electron": "electron .",
+    "dev": "electron . --no-sandbox",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "csv-parse": "^6.1.0"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0"
   }
 }
