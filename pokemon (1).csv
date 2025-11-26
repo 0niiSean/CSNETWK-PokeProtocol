@@ -4,7 +4,7 @@ abilities,against_bug,against_dark,against_dragon,against_electric,against_fairy
 "['Overgrow', 'Chlorophyll']",1,1,1,0.5,0.5,0.5,2,2,1,0.25,1,2,1,1,2,1,1,0.5,100,5120,70,625,45,Seed Pokémon,123,1059860,2.0,80,Fushigibanaフシギバナ,Venusaur,88.1,3,122,120,80,grass,poison,100.0,1,0
 "['Blaze', 'Solar Power']",0.5,1,1,1,0.5,1,0.5,1,1,0.5,2,0.5,1,1,1,2,0.5,2,52,5120,70,309,45,Lizard Pokémon,43,1059860,0.6,39,Hitokageヒトカゲ,Charmander,88.1,4,60,50,65,fire,,8.5,1,0
 "['Blaze', 'Solar Power']",0.5,1,1,1,0.5,1,0.5,1,1,0.5,2,0.5,1,1,1,2,0.5,2,64,5120,70,405,45,Flame Pokémon,58,1059860,1.1,58,Lizardoリザード,Charmeleon,88.1,5,80,65,80,fire,,19.0,1,0
-"['Blaze', 'Solar Power']",0.25,1,1,2,0.5,0.5,0.5,1,1,0.25,0,1,1,1,1,4,0.5,2,104,5120,70,634,45,Flame Pokémon,78,1059860,1.7,78,Lizardonリザードン,Charizard,88.1,6,159,115,100,fire,flying,90.5,1,0
+"['Blaze', 'Solar Power']",0.25,1,1,2,0.5,0.5,0.5,1,1,0.25,0,1,1,1,1,4,0.5,2,104,5120,70,634,45,Flame Pokémon,78,1059860,1.7,267,Lizardonリザードン,Charizard,88.1,6,159,115,100,fire,flying,90.5,1,0
 "['Torrent', 'Rain Dish']",1,1,1,2,1,1,0.5,1,1,2,1,0.5,1,1,1,1,0.5,0.5,48,5120,70,314,45,Tiny Turtle Pokémon,65,1059860,0.5,44,Zenigameゼニガメ,Squirtle,88.1,7,50,64,43,water,,9.0,1,0
 "['Torrent', 'Rain Dish']",1,1,1,2,1,1,0.5,1,1,2,1,0.5,1,1,1,1,0.5,0.5,63,5120,70,405,45,Turtle Pokémon,80,1059860,1.0,59,Kameilカメール,Wartortle,88.1,8,65,80,58,water,,22.5,1,0
 "['Torrent', 'Rain Dish']",1,1,1,2,1,1,0.5,1,1,2,1,0.5,1,1,1,1,0.5,0.5,103,5120,70,630,45,Shellfish Pokémon,120,1059860,1.6,79,Kamexカメックス,Blastoise,88.1,9,135,115,78,water,,85.5,1,0
@@ -23,7 +23,7 @@ abilities,against_bug,against_dark,against_dragon,against_electric,against_fairy
 "['Keen Eye', 'Sniper']",0.5,1,1,2,1,1,1,1,0,0.5,0,2,1,1,1,2,1,1,90,3840,70,442,90,Beak Pokémon,65,1000000,1.2,65,Onidrillオニドリル,Fearow,50,22,61,61,100,normal,flying,38.0,1,0
 "['Intimidate', 'Shed Skin', 'Unnerve']",0.5,1,1,1,0.5,0.5,1,1,1,0.5,2,1,1,0.5,2,1,1,1,60,5120,70,288,255,Snake Pokémon,44,1000000,2.0,35,Arboアーボ,Ekans,50,23,40,54,55,poison,,6.9,1,0
 "['Intimidate', 'Shed Skin', 'Unnerve']",0.5,1,1,1,0.5,0.5,1,1,1,0.5,2,1,1,0.5,2,1,1,1,95,5120,70,448,90,Cobra Pokémon,69,1000000,3.5,60,Arbokアーボック,Arbok,50,24,65,79,80,poison,,65.0,1,0
-"['Static', 'Lightningrod']",1,1,1,0.5,1,1,1,0.5,1,1,2,1,1,1,1,1,0.5,1,55,2560,70,320,190,Mouse Pokémon,40,1000000,0.4,35,Pikachuピカチュウ,Pikachu,50,25,50,50,90,electric,,6.0,1,0
+"['Static', 'Lightningrod']",1,1,1,0.5,1,1,1,0.5,1,1,2,1,1,1,1,1,0.5,1,55,2560,70,320,190,Mouse Pokémon,40,1000000,0.4,267,Pikachuピカチュウ,Pikachu,50,25,50,50,90,electric,,6.0,1,0
 "['Static', 'Lightningrod', 'Surge Surfer']",1,1,1,0.5,1,1,1,0.5,1,1,2,1,1,1,1,1,0.5,1,85,2560,70,485,75,Mouse Pokémon,50,1000000,,60,Raichuライチュウ,Raichu,50,26,95,85,110,electric,electric,,1,0
 "['Sand Veil', 'Sand Rush', 'Snow Cloak', 'Slush Rush']",1,1,1,0,1,1,1,1,1,2,1,2,1,0.5,1,0.5,1,2,75,5120,70,300,255,Mouse Pokémon,90,1000000,,50,Sandサンド,Sandshrew,50,27,10,35,40,ground,ice,,1,0
 "['Sand Veil', 'Sand Rush', 'Snow Cloak', 'Slush Rush']",1,1,1,0,1,1,1,1,1,2,1,2,1,0.5,1,0.5,1,2,100,5120,70,450,90,Mouse Pokémon,120,1000000,,75,Sandpanサンドパン,Sandslash,50,28,25,65,65,ground,ice,,1,0

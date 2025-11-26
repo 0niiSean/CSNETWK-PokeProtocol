@@ -201,8 +201,8 @@ export function processCalculationReport(message) {
          return;
     }
     
-    const remoteDamage = message[BATTLE_FIELDS.DAMAGE_DEALT];
-    const remoteDefenderHP = message[BATTLE_FIELDS.DEFENDER_HP_REMAINING];
+    const remoteDamage = Number(message[BATTLE_FIELDS.DAMAGE_DEALT]);
+    const remoteDefenderHP = Number(message[BATTLE_FIELDS.DEFENDER_HP_REMAINING]);
     
     const localDamage = localResult.damageDealt;
     const localDefenderHP = localResult.defenderHpRemaining;

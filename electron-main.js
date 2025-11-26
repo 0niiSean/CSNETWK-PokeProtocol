@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { dirname } from 'path';
+import * as BattleManager from './game/battle-manager.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -19,8 +20,8 @@ function createWindow() {
 
     mainWindow.loadFile('public/battle-ui.html');
     
-    // Open DevTools for debugging
-    mainWindow.webContents.openDevTools();
+    // Initialize battle manager with window reference
+    BattleManager.initialize(mainWindow);
 
     mainWindow.on('closed', () => {
         mainWindow = null;
@@ -41,11 +42,15 @@ app.on('activate', () => {
     }
 });
 
-// Battle communication handlers
+// ===== IPC Handlers =====
+
 ipcMain.on('start-battle', (event, data) => {
-    console.log('Starting battle:', data);
+    const { role, ip, port } = data;
+    console.log(`Starting battle as ${role} connecting to ${ip}:${port}`);
+    BattleManager.startBattle(role, ip, parseInt(port));
 });
 
 ipcMain.on('attack', (event, moveName) => {
-    console.log('Attack:', moveName);
+    console.log(`Attack: ${moveName}`);
+    BattleManager.executeAttack(moveName);
 });
