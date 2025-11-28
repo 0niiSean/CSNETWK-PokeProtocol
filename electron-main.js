@@ -18,7 +18,7 @@ function createWindow() {
         }
     });
 
-    mainWindow.loadFile('public/battle-ui.html');
+    mainWindow.loadFile('public/loading-ui.html');
     
     // Initialize battle manager with window reference
     BattleManager.initialize(mainWindow);
