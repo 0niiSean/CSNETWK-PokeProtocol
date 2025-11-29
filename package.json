@@ -2,7 +2,13 @@
   "name": "csnetwk-pokeprotocol",
   "version": "1.0.0",
   "description": "P2P Pokémon Battle Protocol over UDP with Electron GUI",
-  "keywords": ["pokemon", "udp", "p2p", "electron", "battle"],
+  "keywords": [
+    "pokemon",
+    "udp",
+    "p2p",
+    "electron",
+    "battle"
+  ],
   "homepage": "https://github.com/0niiSean/CSNETWK-PokeProtocol#readme",
   "bugs": {
     "url": "https://github.com/0niiSean/CSNETWK-PokeProtocol/issues"
