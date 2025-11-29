@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const loadingText = document.getElementById("start-button");
+    const startButton = document.getElementById("start-button");
     
     startButton.addEventListener('click', ()=> {
-        window.location.href="connect-ui.html";
+        window.location.href="battle-ui.html";
     });
 
     document.addEventListener('keydown', (event)=>{
