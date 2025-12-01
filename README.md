@@ -1,6 +1,17 @@
 # CSNETWK-PokeProtocol
 An implementation of the P2P Pokémon Battle Protocol (PokeProtocol) over UDP for the CSNETWK Machine Problem
 
+## Features
+
+* Peer-to-peer Pokémon battle simulation over UDP
+* Four-step handshake for reliable turn synchronization
+* Real-time state management and verification system
+* Reliability layer using sequence numbers, ACKs, and retransmissions
+* In-battle text and sticker messaging system
+* Spectator mode for observing active matches
+* Modular protocol states for scalability and testing
+
+
 ### How to Run This Test
 
 You will need to open **two separate terminals** (or command prompts) inside this project folder.
