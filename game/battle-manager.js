@@ -173,6 +173,15 @@ function handleMessageForRenderer(message) {
                 type: 'system' 
             });
             break;
+
+        case 'CHAT_MESSAGE':
+            sendToRenderer('chat-update',{
+                sender: message.sender_name,
+                text: message.message_text,
+                sticker: message.sticker_data,
+                isSelf: false
+            });
+            break;
     }
 }
 
@@ -199,4 +208,60 @@ export async function executeAttack(moveName) {
     StateMachine.transitionState(StateMachine.CONNECTION_STATES.PROCESSING_TURN);
     
     sendToRenderer('log', { message: `You used ${moveName}!`, type: 'normal' });
+}
+
+/*
+ * Send a chat message
+ */
+
+export async function sendChatMessage(text) {
+    const state = GameState.getBattleState();
+
+    const {getNextSequenceNumber} = await import('../network/reliability.js');
+    const seqNum    = getNextSequenceNumber();
+
+    const chatPacket = {
+        message_type: 'CHAT_MESSAGE',
+        sequence_number: seqNum,
+        sender_name: state.local.pokemonName || state.peerRole,
+        content_type: 'TEXT',
+        message_text: text
+    };
+
+    if(state.remoteIP && state.remotePort){
+        P2PClient.sendGameCommand(chatPacket, state.remoteIP, state.remotePort);
+
+        sendToRenderer('chat-update', {
+            sender: 'You',
+            text: text,
+            isSelf: true
+        });
+    }else{
+        Logger.warn('Chat', 'Cannot send chat: No connection.');
+    }
+    
+}
+
+export async function sendSticker(base64Data){
+    const state = GameState.getBattleState();
+    const { getNextSequenceNumber } = await import('../network/reliability.js');
+    const seqNum = getNextSequenceNumber();
+
+    const stickerPacket ={
+        message_type: 'CHAT_MESSAGE',
+        sequence_number: seqNum,
+        sender_name: state.local.pokemonName || state.peerRole,
+        content_type: 'STICKER',      
+        sticker_data: base64Data 
+    };
+
+    if(state.remoteIP && state.remotePort){
+        P2PClient.sendGameCommand(stickerPacket, state.remoteIP, state.remotePort);
+
+        sendToRenderer('chat-update',{
+            sender: 'You',
+            sticker: base64Data,
+            isSelf: true
+        });
+    }
 }

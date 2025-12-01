@@ -73,6 +73,25 @@
         </div>
     </div>
 
+<div id="chat-container">
+    
+    <div id="chat-history"></div>
+
+    <div id="chat-controls">
+        <div class="sticker-wrapper">
+            <button id="btn-sticker-toggle">ඞ</button>
+            <div id="sticker-popup" class="hidden">
+                <img src="assets/sticker_1.png" class="sticker-option" alt="Happy">
+                <img src="assets/sticker_2.png" class="sticker-option" alt="Angry">
+                <img src="assets/sticker_3.png" class="sticker-option" alt="Shocked">
+            </div>
+        </div>
+
+        <input type="text" id="chat-input-field" placeholder="Type a message..." maxlength="50">
+        <button onclick="sendChat()" id="btn-chat-send">Send</button>
+    </div>
+</div>
+
     <script src="battle-ui.js"></script>
 </body>
 </html>

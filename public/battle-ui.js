@@ -41,7 +41,41 @@ ipcRenderer.on('game-over', (event, data) => {
     enableMoveButtons(false);
 });
 
+ipcRenderer.on('chat-update', (event, data)=>{
+    addChatMessage(data.sender, data.text, data.sticker, data.isSelf);
+});
+
 // ===== UI Functions =====
+
+function addChatMessage(sender,text, sticker, isSelf){
+    const chatContainer = document.getElementById('chat-history');
+    const msgDiv = document.createElement('div');
+
+    msgDiv.classList.add('chat-message');
+    msgDiv.classList.add(isSelf ? 'self' : 'opponent');
+
+    const senderSpan = document.createElement('span');
+    senderSpan.className = 'sender-name';
+    senderSpan.textContent = isSelf ? 'You' : sender;
+
+    if (sticker){
+        const img = document.createElement('img');
+        img.src = sticker;
+        msgDiv.appendChild(senderSpan);
+        msgDiv.appendChild(document.createElement('br'));
+        msgDiv.appendChild(img);
+    }else{
+        const textSpan = document.createElement('span');
+        textSpan.textContent = text;
+
+        msgDiv.appendChild(senderSpan);
+        msgDiv.appendChild(document.createElement('br'));
+        msgDiv.appendChild(textSpan);
+    }
+
+    chatContainer.appendChild(msgDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
 
 function addLog(message, type = 'normal') {
     const log = document.getElementById('battle-log');
@@ -128,3 +162,44 @@ function attack(moveName) {
     
     enableMoveButtons(false);
 }
+
+function sendChat(){
+    const input = document.getElementById('chat-input-field');
+    const text = input.value.trim();
+
+    if(text){
+        ipcRenderer.send('send-chat', text);
+        input.value = '';
+    }
+
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const popup = document.getElementById('sticker-popup');
+    const toggleBtn = document.getElementById('btn-sticker-toggle');
+    const stickerOptions = document.querySelectorAll('.sticker-option');
+
+    toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        popup.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', () => {
+        popup.classList.add('hidden');
+    });
+
+    stickerOptions.forEach(img => {
+        img.addEventListener('click', () => {
+
+            const canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            
+            const base64Data = canvas.toDataURL('image/png');
+
+            ipcRenderer.send('send-sticker', base64Data);
+        });
+    });
+});

@@ -25,7 +25,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "electron electron-main.js",
     "electron": "electron .",
     "dev": "electron . --no-sandbox",
     "test": "echo \"Error: no test specified\" && exit 1"
