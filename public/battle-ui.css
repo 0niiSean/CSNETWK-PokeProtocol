@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -5,344 +7,282 @@
 }
 
 body {
-    font-family: 'Courier New', monospace;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    /* White background with light blue grid pattern */
+    background-color: #f8f9fa;
+    background-image: 
+        linear-gradient(#e1e4e8 1px, transparent 1px),
+        linear-gradient(90deg, #e1e4e8 1px, transparent 1px);
+    background-size: 20px 20px;
+    
+    color: #2c3e50;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    font-size: 10px; /* Pixel fonts render large, so we scale down */
 }
 
+/* --- HEADER (The Cyan Bar) --- */
 .header {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 20px;
-    text-align: center;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    background: #4fc3f7; /* Bright Cyan from screenshot */
+    border-bottom: 3px solid #000;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .header h1 {
-    font-size: 2em;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 1.4em;
+    color: #fff;
+    text-shadow: 2px 2px 0 #000; /* Retro shadow */
+    margin: 0;
 }
 
 .status-bar {
-    margin-top: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.8em;
+    border: 1px solid rgba(0,0,0,0.1);
 }
 
 .status-indicator {
     display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-right: 10px;
-    animation: pulse 2s infinite;
+    width: 8px;
+    height: 8px;
+    border: 1px solid #000;
+    margin-right: 5px;
 }
+.status-indicator.connected { background: #00ff00; }
+.status-indicator.disconnected { background: #ff0000; }
 
-.status-indicator.connected {
-    background: #00ff00;
-    box-shadow: 0 0 10px #00ff00;
-}
-
-.status-indicator.disconnected {
-    background: #ff0000;
-    box-shadow: 0 0 10px #ff0000;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
+/* --- BATTLE ARENA --- */
 .battle-arena {
-    flex: 1 1 auto;
-    min-height: 0;
-    display: flex;
-    padding: 20px;
-    gap: 20px;
-    overflow: hidden;
-}
-
-.pokemon-side {
     flex: 1;
     display: flex;
-    flex-direction: column;
+    padding: 20px;
+    gap: 30px;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 30px;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Pokemon Cards (Mimicking the Info Panel) */
+.pokemon-side {
+    background: #fff;
+    border: 3px solid #000;
+    border-radius: 6px;
+    padding: 0; /* Removing padding to style header */
+    width: 45%;
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.1); /* Block shadow */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .pokemon-name {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    background: #636e72; /* Grey header like the screenshot tabs */
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 3px solid #000;
+    font-size: 1.2em;
+    text-shadow: 2px 2px 0 #000;
 }
 
 .hp-container {
-    width: 100%;
-    margin: 20px 0;
+    padding: 20px;
 }
 
 .hp-label {
-    font-size: 1.2em;
-    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
 .hp-bar {
-    width: 100%;
-    height: 30px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 15px;
-    overflow: hidden;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    height: 16px;
+    background: #eee;
+    border: 2px solid #000;
+    border-radius: 8px;
+    padding: 1px;
 }
 
 .hp-fill {
     height: 100%;
-    background: linear-gradient(90deg, #00ff00, #00cc00);
-    transition: width 0.5s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 0.9em;
+    background: #4ade80; 
+    border-radius: 4px;
+    border-top: 2px solid rgba(255,255,255,0.5); 
 }
+.hp-fill.low { background: #facc15; }
+.hp-fill.critical { background: #ff6b6b; }
 
-.hp-fill.low {
-    background: linear-gradient(90deg, #ffaa00, #ff8800);
-}
-
-.hp-fill.critical {
-    background: linear-gradient(90deg, #ff0000, #cc0000);
-}
-
+/* --- CONTROLS (Bottom Panel) --- */
 .controls {
-    background: rgba(0, 0, 0, 0.4);
-    padding: 20px;
-    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    background: #2d3436; /* Dark slate footer */
+    border-top: 3px solid #000;
+    padding: 15px;
+    color: #fff;
 }
 
 .connection-panel {
-    display: grid;
-    grid-template-columns: auto 1fr 1fr auto;
+    display: flex;
     gap: 10px;
     margin-bottom: 15px;
+    background: #b2bec3; 
+    padding: 8px;
+    border: 2px solid #000;
+    border-radius: 4px;
 }
 
-.connection-panel select,
-.connection-panel input {
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 1em;
-    background: rgba(255, 255, 255, 0.9);
+.connection-panel input, .connection-panel select {
+    font-family: 'Press Start 2P';
+    font-size: 0.8em;
+    padding: 8px;
+    border: 2px solid #000;
+    flex: 1;
 }
 
-.connection-panel button {
-    padding: 10px 30px;
-    border: none;
-    border-radius: 5px;
-    background: linear-gradient(135deg, #00ff00, #00cc00);
-    color: #000;
-    font-weight: bold;
+#connect-btn {
+    font-family: 'Press Start 2P';
+    background: #00b894; 
+    color: #fff;
+    border: 2px solid #000;
     cursor: pointer;
-    transition: all 0.3s;
+    box-shadow: 0 4px 0 #006b54;
+    transition: transform 0.1s;
 }
+#connect-btn:active { transform: translateY(4px); box-shadow: none; }
 
-.connection-panel button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
-}
-
-.battle-log {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    height: 120px;
-    overflow-y: auto;
-    font-size: 0.9em;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.battle-log p {
-    margin: 5px 0;
-    padding: 5px 10px;
-    border-left: 3px solid #00ff00;
-    background: rgba(0, 0, 0, 0.3);
-}
-
-.battle-log p.error {
-    border-left-color: #ff0000;
-}
-
-.battle-log p.system {
-    border-left-color: #00aaff;
-}
 
 .move-buttons {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
 }
 
 .move-btn {
-    padding: 20px;
-    font-size: 1.2em;
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
+    font-family: 'Press Start 2P';
+    background: #dfe6e9; 
+    color: #000;
+    border: 2px solid #000;
+    padding: 15px;
     cursor: pointer;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    transition: all 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.move-btn:hover:not(:disabled) {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-}
-
-.move-btn:active:not(:disabled) {
-    transform: translateY(-1px);
-}
-
-.move-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-.turn-indicator {
-    text-align: center;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
-    margin-bottom: 10px;
-    font-size: 1.1em;
-}
-
-.turn-indicator.your-turn {
-    background: rgba(0, 255, 0, 0.2);
-    border: 2px solid #00ff00;
-}
-
-.turn-indicator.opponent-turn {
-    background: rgba(255, 0, 0, 0.2);
-    border: 2px solid #ff0000;
-}
-
-#chat-container {
-        flex-shrink: 0;
-        border: 2px solid #333;
-        background: rgba(0,0,0,0.8);
-        height: 200px;
-        display: flex;
-        flex-direction: column;
-        margin-top: 10px;
-        color: white;
-    }
-    
-#chat-history {
-        flex-grow: 1;
-        overflow-y: auto;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-.chat-message {
-        padding: 5px 10px;
-        border-radius: 5px;
-        max-width: 80%;
-        word-wrap: break-word;
-    }
-    
-.chat-message.self {
-        align-self: flex-end;
-        background-color: #4CAF50;
-        text-align: right;
-    }
-    
-.chat-message.opponent {
-        align-self: flex-start;
-        background-color: #2196F3;
-    }
-
-.sender-name {
-        font-size: 0.7em;
-        opacity: 0.8;
-        font-weight: bold;
-    }
-
-#chat-controls {
-        display: flex;
-        padding: 5px;
-        border-top: 1px solid #555;
-    }
-
-#chat-input-field {
-        flex-grow: 1;
-        padding: 5px;
-        margin-right: 5px;
-    }
-
-#btn-sticker-toggle {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5em;
-    cursor: pointer;
-    padding: 0 10px;
-    }
-
-#sticker-popup {
-    position: absolute;
-    bottom: 100%; 
-    left: 0;
-    background: rgba(0, 0, 0, 0.9);
-    border: 1px solid #555;
-    border-radius: 5px;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 5px;
-    width: 150px;
-    z-index: 100;
-    }
-
-.sticker-wrapper {
+    text-align: left;
     position: relative;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
     display: flex;
     align-items: center;
 }
 
-#sticker-popup.hidden {
-    display: none;
-    }
+.move-btn::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #000;
+    margin-right: 10px;
+}
+#btn-tackle::before { background: #a8a878; }
+#btn-thunderbolt::before { background: #f8d030; } 
 
-.sticker-option {
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    transition: transform 0.2s;
+.move-btn:hover:not(:disabled) { background: #fff; margin-top: -2px; margin-bottom: 2px; }
+.move-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+
+#chat-container {
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 4px;
+    height: 150px;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
-.sticker-option:hover {
-    transform: scale(1.1);
-    }   
+#chat-history {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    background-image: 
+        linear-gradient(#f1f1f1 1px, transparent 1px),
+        linear-gradient(90deg, #f1f1f1 1px, transparent 1px);
+    background-size: 10px 10px;
+}
 
-.chat-message img {
-    max-width: 100px;
-    border-radius: 5px;
-    margin-top: 5px;
-    }
+.chat-message {
+    padding: 4px 8px;
+    margin-bottom: 4px;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 1px 1px 0 #ddd;
+    font-size: 0.9em;
+    color: #000;
+    max-width: fit-content;
+}
+.chat-message.self { margin-left: auto; background: #e0ffe0; border-color: #bbfabb; }
+
+#chat-controls {
+    border-top: 2px solid #000;
+    padding: 8px;
+    background: #b2bec3;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+#chat-input-field {
+    flex: 1;
+    border: 2px solid #000;
+    padding: 8px;
+    font-family: 'Press Start 2P';
+    font-size: 0.7em;
+}
+
+#btn-chat-send {
+    background: #0984e3;
+    color: #fff;
+    border: 2px solid #000;
+    font-family: 'Press Start 2P';
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+.sticker-wrapper button {
+    border: none;
+    background: none;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+
+#sticker-popup {
+    position: absolute;
+    bottom: 50px;
+    left: 10px;
+    background: #fff;
+    border: 2px solid #000;
+    padding: 5px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+}
+.sticker-option:hover { background: #eee; }
+.hidden { display: none !important; }
+
+
+.battle-log { display: none; } 
+.turn-indicator {
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 5px;
+    background: #fff;
+    border: 2px solid #000;
+    color: #000;
+}
