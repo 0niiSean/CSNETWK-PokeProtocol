@@ -15,6 +15,22 @@
 
 ---
 
+## How to Operate 
+### 1. Clone the repository (Or download ZIP File) 
+```bash
+git clone https://github.com/0niiSean/CSNETWK-PokeProtocol
+cd CSNETWK-PokeProtocol
+```
+### 2. Install dependencies
+```bash
+npm install
+```
+### 3. Run the application
+```bash
+npm start
+```
+
+
 ## Features
 
 * Peer-to-peer Pokémon battle simulation over UDP
