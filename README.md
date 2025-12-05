@@ -129,3 +129,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## Maintainers
 
 All contributors must follow the branching and changelog conventions described above.
+
+## Declaration of AI Use
+
+This is to testify that all four members/contributors of this group used AI only for idea generation, error spotting, and debugging. The members of this group have enough evidence and documentation through demo and inline code comments to prove this project's integrity and preserve Intellectual and Academic Honesty.
