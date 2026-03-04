@@ -1,28 +1,39 @@
 {
   "name": "csnetwk-pokeprotocol",
   "version": "1.0.0",
-  "description": "An implementation of the P2P Pokémon Battle Protocol (PokeProtocol) over UDP for the CSNETWK Machine Problem",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "P2P Pokémon Battle Protocol over UDP with Electron GUI",
+  "keywords": [
+    "pokemon",
+    "udp",
+    "p2p",
+    "electron",
+    "battle"
+  ],
+  "homepage": "https://github.com/0niiSean/CSNETWK-PokeProtocol#readme",
+  "bugs": {
+    "url": "https://github.com/0niiSean/CSNETWK-PokeProtocol/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/0niiSean/CSNETWK-PokeProtocol.git"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/0niiSean/CSNETWK-PokeProtocol/issues"
+  "author": "",
+  "type": "module",
+  "main": "electron-main.js",
+  "directories": {
+    "doc": "docs"
   },
-  "homepage": "https://github.com/0niiSean/CSNETWK-PokeProtocol#readme",
+  "scripts": {
+    "start": "node index.js",
+    "electron": "electron .",
+    "dev": "electron . --no-sandbox",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
-    "csv-parser": "^3.2.0"
+    "csv-parse": "^6.1.0"
   },
   "devDependencies": {
-    "eslint": "^9.37.0",
-    "nodemon": "^3.1.10",
-    "prettier": "^3.6.2"
+    "electron": "^39.2.4"
   }
 }

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Battle Protocol</title>
+    <link rel="stylesheet" href="battle-ui.css">
+</head>
+<body>
+    <div class="header">
+        <h1>⚡ POKÉMON BATTLE PROTOCOL ⚡</h1>
+        <div class="status-bar">
+            <span class="status-indicator disconnected" id="status"></span>
+            <span id="status-text">Disconnected</span>
+        </div>
+    </div>
+
+    <div class="battle-arena">
+        <div class="pokemon-side">
+            <div class="pokemon-name" id="your-pokemon">---</div>
+            <div class="hp-container">
+                <div class="hp-label">
+                    <span>HP</span>
+                    <span id="your-hp-text">0 / 0</span>
+                </div>
+                <div class="hp-bar">
+                    <div class="hp-fill" id="your-hp" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pokemon-side">
+            <div class="pokemon-name" id="opponent-pokemon">???</div>
+            <div class="hp-container">
+                <div class="hp-label">
+                    <span>HP</span>
+                    <span id="opponent-hp-text">? / ?</span>
+                </div>
+                <div class="hp-bar">
+                    <div class="hp-fill" id="opponent-hp" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="connection-panel">
+            <select id="role-select">
+                <option value="HOST">Host</option>
+                <option value="JOINER">Joiner</option>
+            </select>
+            <input type="text" id="host-ip" placeholder="Host IP" value="127.0.0.1">
+            <input type="number" id="host-port" placeholder="Port" value="8000">
+            <button onclick="startBattle()" id="connect-btn">Connect</button>
+        </div>
+
+        <div class="turn-indicator" id="turn-indicator">
+            Waiting to connect...
+        </div>
+
+        <div class="battle-log" id="battle-log">
+            <p class="system">⚡ Welcome to Pokémon Battle Protocol!</p>
+            <p class="system">Configure your connection settings above and click Connect.</p>
+        </div>
+
+        <div class="move-buttons">
+            <button class="move-btn" onclick="attack('Tackle')" disabled id="btn-tackle">
+                Tackle
+            </button>
+            <button class="move-btn" onclick="attack('Thunderbolt')" disabled id="btn-thunderbolt">
+                Thunderbolt
+            </button>
+        </div>
+    </div>
+
+    <script src="battle-ui.js"></script>
+</body>
+</html>
