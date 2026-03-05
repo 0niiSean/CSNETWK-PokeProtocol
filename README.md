@@ -1,29 +1,115 @@
-# CSNETWK-PokeProtocol
-An implementation of the P2P Pokémon Battle Protocol (PokeProtocol) over UDP for the CSNETWK Machine Problem
+# RFC PokeProtocol Repository
 
-### How to Run This Test
+## Version
 
-You will need to open **two separate terminals** (or command prompts) inside this project folder.
+**v0.1.0 - Initial Draft**
 
-**1. In your FIRST terminal, start the Host:**
+---
 
-    The Host needs to be running first so it can listen for messages.
+## Members
 
-    ```bash
-    node host.js
-    ```
+* Airon Matthew
+* LIM, JOSHUA EMMANUEL SESE
+* Sean Andrei
+* Roberta Netanya
 
-    You should see this output, and then it will wait:
+---
 
-    ```bash
-    Host is listening on channel 4000. Waiting for a friend...
-    ```
+## Features
 
-**2.  In your SECOND terminal, run the joiner:**
-    The Joiner will send a message to the Host and wait for a reply.
+* Peer-to-peer Pokémon battle simulation over UDP
+* Four-step handshake for reliable turn synchronization
+* Real-time state management and verification system
+* Reliability layer using sequence numbers, ACKs, and retransmissions
+* In-battle text and sticker messaging system
+* Spectator mode for observing active matches
+* Modular protocol states for scalability and testing
 
-    ```bash
-    node joiner.js
-    ```
+---
 
-    If everything works, you will see a two-way conversation!
+## Tech Stack
+
+* **Protocol Base:** UDP (User Datagram Protocol)
+* **Language:** Node.js (for planned implementation)
+* **Frameworks:** Express.js (optional API interface)
+* **Testing:** Manual peer-to-peer UDP simulation
+* **Documentation Format:** RFC-based Markdown (RFC PokeProtocol-1)
+
+---
+
+## Project Structure
+
+```
+/public                 → static assets (HTML, CSS, JS)
+/docs                   → documentation branch
+    ├─ notes.md         → developer notes and workflow
+    ├─ tasks.md         → contributor task list
+    ├─ RFC PokeProtocol-1.pdf → reference protocol document
+CHANGELOG.md             → changelog and version log
+README.md                → main project documentation
+```
+
+---
+
+## Milestones
+
+* **Milestone 1:** Finalize protocol draft and documentation
+* **Milestone 2:** Implement network reliability and communication layer
+* **Milestone 3:** Develop and test peer synchronization logic
+* **Milestone 4:** Integrate user interface and visualization tools
+
+---
+
+## Branch Structure
+
+**Main**
+
+> Stable release branch — only merge finalized and reviewed versions.
+
+**Dev**
+
+> Active development branch — merge feature branches here after testing.
+
+**Docs**
+
+> Documentation-only updates.
+
+**Feature Branches (Aviation Themed)**
+
+* `feat-blackbird` → Network Architecture & UDP Communication
+* `feat-harrier` → Message Handling & Reliability Layer
+* `feat-viper` → Game Logic & State Machine
+* `feat-talon` → User Interface & Visualization Components
+
+---
+
+## Changelog
+
+This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/).
+
+### [0.1.0] - 2025-10-09
+
+#### Added
+
+* RFC PokeProtocol draft specification
+* Initial project structure and documentation
+* Defined aviation-themed feature branches
+* Established base milestones and goals
+
+#### Planned
+
+* Implement UDP socket handling prototype
+* Add CLI battle simulation module
+* Test reliability layer and peer synchronization
+
+---
+
+## References
+
+* *RFC PokeProtocol-1.pdf* — Request for Comments: P2P Pokémon Battle Protocol (Draft)
+
+---
+
+## Maintainers
+
+All contributors must follow the branching and changelog conventions described above.
